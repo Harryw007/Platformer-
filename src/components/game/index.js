@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Character } from "@/components/characters/Character";
 import { Pillar } from "@/components/obstacles/Pillar";
 import { Score } from "@/components/game/Score";
@@ -16,7 +16,34 @@ export const USER_GENERATED_OBSTACLES = [
     { id: 4, position: generatePosition(1.6), Component: Pillar }
 ];
 
-const GameContent = () => {
+const StartScreen = ({ onStart }) => {
+    useEffect(() => {
+        const handleKeyPress = (event) => {
+            onStart(event.key);
+        };
+
+        window.addEventListener('keydown', handleKeyPress);
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [onStart]);
+
+    return (
+        <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+            backgroundColor: '#ddd',
+            fontSize: '24px',
+            fontWeight: 'bold'
+        }}>
+            Press any key to start
+        </div>
+    );
+};
+
+const GameContent = ({ startKey }) => {
     const { charRef, charCoords, jumpClicked } = useCharacter();
     const { points, isGameOver, obstacleRefs, obstacles } = useGameEngine({
         charCoords
@@ -48,15 +75,26 @@ const GameContent = () => {
 export const Game = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userName, setUserName] = useState('');
+    const [hasStarted, setHasStarted] = useState(false);
+    const [startKey, setStartKey] = useState(null);
 
     const handleLogin = (name) => {
         setUserName(name);
         setIsLoggedIn(true);
     };
 
+    const handleStart = (key) => {
+        setStartKey(key);
+        setHasStarted(true);
+    };
+
     if (!isLoggedIn) {
         return <LoginScreen onLogin={handleLogin} />;
     }
 
-    return <GameContent />;
+    if (!hasStarted) {
+        return <StartScreen onStart={handleStart} />;
+    }
+
+    return <GameContent startKey={startKey} />;
 };
