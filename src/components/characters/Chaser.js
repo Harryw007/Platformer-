@@ -10,7 +10,7 @@ export const Chaser = forwardRef(({ jumpClicked, height, width, userImage }, ref
             style={{
                 position: 'absolute',
                 bottom: jumpClicked ? `${JUMP_HEIGHT_PX}px` : '0px', // 100px is the jump height
-                left: '85%', // Center horizontally
+                left: '15%', // Center horizontally
                 transform: 'translateX(-50%)', // Adjust for perfect centering
                 width: `${width}px`,
                 height: `${height}px`,

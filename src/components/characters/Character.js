@@ -10,7 +10,7 @@ export const Character = forwardRef(({ jumpClicked, height, width, userImage }, 
             style={{
                 position: 'absolute',
                 bottom: jumpClicked ? `${JUMP_HEIGHT_PX}px` : '0px', // 100px is the jump height
-                left: '75%', // Center horizontally
+                left: '25%', // Center horizontally
                 transform: 'translateX(-50%)', // Adjust for perfect centering
                 width: `${width}px`,
                 height: `${height}px`,
