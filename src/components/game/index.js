@@ -16,22 +16,11 @@ export const USER_GENERATED_OBSTACLES = [
     { id: 4, position: generatePosition(1.6), Component: Pillar }
 ];
 
-export const Game = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userName, setUserName] = useState('');
+const GameContent = () => {
     const { charRef, charCoords, jumpClicked } = useCharacter();
     const { points, isGameOver, obstacleRefs, obstacles } = useGameEngine({
         charCoords
     });
-
-    const handleLogin = (name) => {
-        setUserName(name);
-        setIsLoggedIn(true);
-    };
-
-    if (!isLoggedIn) {
-        return <LoginScreen onLogin={handleLogin} />;
-    }
 
     return (
         <div style={{
@@ -54,4 +43,20 @@ export const Game = () => {
             <Score points={parseInt(points / 10)} />
         </div>
     );
+};
+
+export const Game = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userName, setUserName] = useState('');
+
+    const handleLogin = (name) => {
+        setUserName(name);
+        setIsLoggedIn(true);
+    };
+
+    if (!isLoggedIn) {
+        return <LoginScreen onLogin={handleLogin} />;
+    }
+
+    return <GameContent />;
 };
