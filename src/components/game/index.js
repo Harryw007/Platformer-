@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Character } from "@/components/characters/Character";
 import { Chaser } from "@/components/characters/Chaser";
 import { Pillar } from "@/components/obstacles/Pillar";
@@ -8,6 +8,24 @@ import useGameEngine from "@/game_engine/game_engine";
 import { CHAR_HEIGHT, CHAR_WIDTH, GAME_HEIGHT, GAME_WIDTH } from "@/constants/game";
 import useCharacter from "@/game_engine/character";
 import LoginScreen from "@/components/LoginScreen";
+
+const userImages = {
+    dylan: 'dylan.jpg',
+    emma: 'emma.jpg',
+    fabien: 'fabien.jpg',
+    george: 'george.jpg',
+    harry: 'harry.jpg',
+    jake: 'jake.jpg',
+    josh: 'josh.jpg',
+    rhianna: 'rhianna.jpg',
+    ruben: 'ruben.jpg',
+    tanya: 'tanya.jpg'
+};
+
+const getRandomUserImage = (excludeImage) => {
+    const images = Object.values(userImages).filter(image => image !== excludeImage);
+    return images[Math.floor(Math.random() * images.length)];
+};
 
 export const USER_GENERATED_OBSTACLES = [
     { id: 1, position: 0, Component: Pillar },
@@ -50,6 +68,13 @@ const GameContent = ({ startKey, userImage }) => {
         startKey
     });
 
+    const [obstacleImages, setObstacleImages] = useState([]);
+
+    useEffect(() => {
+        const images = obstacles.map(() => getRandomUserImage(userImage));
+        setObstacleImages(images);
+    }, [obstacles, userImage]);
+
     return (
         <div style={{
             position: 'relative',
@@ -61,11 +86,12 @@ const GameContent = ({ startKey, userImage }) => {
         }}>
             <Character width={CHAR_WIDTH} height={CHAR_HEIGHT} ref={charRef} jumpClicked={jumpClicked} userImage={userImage} />
             <Chaser width={CHAR_WIDTH} height={CHAR_HEIGHT} jumpClicked={jumpClicked} userImage={userImage} />
-            {obstacles.map((obstacle) => (
+            {obstacles.map((obstacle, index) => (
                 <obstacle.Component
                     key={obstacle.id}
                     ref={(el) => (obstacleRefs.current[obstacle.id] = el)}
                     position={obstacle.position}
+                    userImage={obstacleImages[index]}
                 />
             ))}
             {isGameOver && <GameOver />}
