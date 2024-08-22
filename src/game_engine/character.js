@@ -12,7 +12,7 @@ const useCharacterMovement = ({
         if (jump) {
             jumpTimeout = setTimeout(() => {
                 setJump(false);
-            }, 500);
+            }, 300);
         }
         return () => clearTimeout(jumpTimeout);
     }, [jump, setJump]);

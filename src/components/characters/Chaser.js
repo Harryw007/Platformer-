@@ -16,7 +16,7 @@ export const Chaser = forwardRef(({ jumpClicked, height, width, userImage }, ref
                 height: `${height}px`,
                 borderRadius: '50%',
                 backgroundColor: 'blue',
-                transition: `bottom ${JUMP_AIRTIME_S}s ease 300ms`,
+                transition: `bottom ${JUMP_AIRTIME_S}s ease 150ms`,
                 backgroundImage: `url("sainsbury.jpg")`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',

@@ -60,7 +60,7 @@ const GameContent = ({ startKey, userImage }) => {
             display: 'flex',
         }}>
             <Character width={CHAR_WIDTH} height={CHAR_HEIGHT} ref={charRef} jumpClicked={jumpClicked} userImage={userImage} />
-            <Chaser width={CHAR_WIDTH} height={CHAR_HEIGHT} ref={charRef} jumpClicked={jumpClicked} userImage={userImage} />
+            <Chaser width={CHAR_WIDTH} height={CHAR_HEIGHT} jumpClicked={jumpClicked} userImage={userImage} />
             {obstacles.map((obstacle) => (
                 <obstacle.Component
                     key={obstacle.id}
