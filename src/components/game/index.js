@@ -47,7 +47,8 @@ const StartScreen = ({ onStart }) => {
 const GameContent = ({ startKey, userImage }) => {
     const { charRef, charCoords, jumpClicked } = useCharacter();
     const { points, isGameOver, obstacleRefs, obstacles } = useGameEngine({
-        charCoords
+        charCoords,
+        startKey
     });
 
     return (
