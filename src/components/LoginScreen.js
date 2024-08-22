@@ -1,3 +1,4 @@
+// components/LoginScreen.js
 import { useState } from 'react';
 
 const LoginScreen = ({ onLogin }) => {
@@ -18,7 +19,7 @@ const LoginScreen = ({ onLogin }) => {
             height: '100vh',
             backgroundColor: '#f0f0f0',
         }}>
-            <h1>Login</h1>
+            <h1>TesGo</h1>
             <input
                 type="text"
                 placeholder="Enter your name"
