@@ -1,4 +1,3 @@
-// components/LoginScreen.js
 import { useState } from 'react';
 
 const LoginScreen = ({ onLogin }) => {

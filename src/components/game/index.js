@@ -43,7 +43,7 @@ const StartScreen = ({ onStart }) => {
     );
 };
 
-const GameContent = ({ startKey }) => {
+const GameContent = ({ startKey, userImage }) => {
     const { charRef, charCoords, jumpClicked } = useCharacter();
     const { points, isGameOver, obstacleRefs, obstacles } = useGameEngine({
         charCoords
@@ -58,7 +58,7 @@ const GameContent = ({ startKey }) => {
             backgroundColor: '#ddd',
             display: 'flex',
         }}>
-            <Character width={CHAR_WIDTH} height={CHAR_HEIGHT} ref={charRef} jumpClicked={jumpClicked} />
+            <Character width={CHAR_WIDTH} height={CHAR_HEIGHT} ref={charRef} jumpClicked={jumpClicked} userImage={userImage} />
             {obstacles.map((obstacle) => (
                 <obstacle.Component
                     key={obstacle.id}
@@ -75,11 +75,27 @@ const GameContent = ({ startKey }) => {
 export const Game = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userName, setUserName] = useState('');
+    const [userImage, setUserImage] = useState('');
     const [hasStarted, setHasStarted] = useState(false);
     const [startKey, setStartKey] = useState(null);
 
     const handleLogin = (name) => {
+        const lowerCaseName = name.toLowerCase();
+        const userImages = {
+            dylan: 'dylan.jpg',
+            emma: 'emma.jpg',
+            fabien: 'fabien.jpg',
+            george: 'george.jpg',
+            harry: 'harry.jpg',
+            jake: 'jake.jpg',
+            josh: 'josh.jpg',
+            rhianna: 'rhianna.jpg',
+            ruben: 'ruben.jpg',
+            tanya: 'tanya.jpg'
+        };
+
         setUserName(name);
+        setUserImage(userImages[lowerCaseName] || '');
         setIsLoggedIn(true);
     };
 
@@ -96,5 +112,5 @@ export const Game = () => {
         return <StartScreen onStart={handleStart} />;
     }
 
-    return <GameContent startKey={startKey} />;
+    return <GameContent startKey={startKey} userImage={userImage} />;
 };
