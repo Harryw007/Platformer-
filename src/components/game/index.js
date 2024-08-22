@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Character } from "@/components/characters/Character";
+import { Chaser } from "@/components/characters/Chaser";
 import { Pillar } from "@/components/obstacles/Pillar";
 import { Score } from "@/components/game/Score";
 import { GameOver } from "@/components/game/GameOver";
@@ -59,6 +60,7 @@ const GameContent = ({ startKey, userImage }) => {
             display: 'flex',
         }}>
             <Character width={CHAR_WIDTH} height={CHAR_HEIGHT} ref={charRef} jumpClicked={jumpClicked} userImage={userImage} />
+            <Chaser width={CHAR_WIDTH} height={CHAR_HEIGHT} ref={charRef} jumpClicked={jumpClicked} userImage={userImage} />
             {obstacles.map((obstacle) => (
                 <obstacle.Component
                     key={obstacle.id}
