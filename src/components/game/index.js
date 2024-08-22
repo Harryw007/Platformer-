@@ -1,24 +1,37 @@
-import {Character} from "@/components/characters/Character";
-import {Pillar} from "@/components/obstacles/Pillar";
-import {Score} from "@/components/game/Score";
-import {GameOver} from "@/components/game/GameOver";
+import { useState } from 'react';
+import { Character } from "@/components/characters/Character";
+import { Pillar } from "@/components/obstacles/Pillar";
+import { Score } from "@/components/game/Score";
+import { GameOver } from "@/components/game/GameOver";
 import useGameEngine from "@/game_engine/game_engine";
-import {CHAR_HEIGHT, CHAR_WIDTH, GAME_HEIGHT, GAME_WIDTH} from "@/constants/game";
+import { CHAR_HEIGHT, CHAR_WIDTH, GAME_HEIGHT, GAME_WIDTH } from "@/constants/game";
 import useCharacter from "@/game_engine/character";
-import {generatePosition} from "@/utils/character";
+import { generatePosition } from "@/utils/character";
+import LoginScreen from "@/components/LoginScreen";
 
 export const USER_GENERATED_OBSTACLES = [
     { id: 1, position: generatePosition(), Component: Pillar },
     { id: 2, position: generatePosition(1.2), Component: Pillar },
     { id: 3, position: generatePosition(1.4), Component: Pillar },
     { id: 4, position: generatePosition(1.6), Component: Pillar }
-]
+];
 
 export const Game = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userName, setUserName] = useState('');
     const { charRef, charCoords, jumpClicked } = useCharacter();
     const { points, isGameOver, obstacleRefs, obstacles } = useGameEngine({
         charCoords
     });
+
+    const handleLogin = (name) => {
+        setUserName(name);
+        setIsLoggedIn(true);
+    };
+
+    if (!isLoggedIn) {
+        return <LoginScreen onLogin={handleLogin} />;
+    }
 
     return (
         <div style={{
@@ -29,7 +42,7 @@ export const Game = () => {
             backgroundColor: '#ddd',
             display: 'flex',
         }}>
-            <Character width={CHAR_WIDTH} height={CHAR_HEIGHT} ref={charRef} jumpClicked={jumpClicked}/>
+            <Character width={CHAR_WIDTH} height={CHAR_HEIGHT} ref={charRef} jumpClicked={jumpClicked} />
             {obstacles.map((obstacle) => (
                 <obstacle.Component
                     key={obstacle.id}
@@ -37,8 +50,8 @@ export const Game = () => {
                     position={obstacle.position}
                 />
             ))}
-            {isGameOver && <GameOver/>}
-            <Score points={parseInt(points / 10)}/>
+            {isGameOver && <GameOver />}
+            <Score points={parseInt(points / 10)} />
         </div>
     );
-}
+};
